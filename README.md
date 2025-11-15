@@ -62,8 +62,8 @@ name: Установка и запуск веб-сервера nginx
         mode: '0755'
 
     - name: Запустить сервис nginx
-```
       service:
         name: nginx
         state: started
-        enabled: yes # Включить автозапуск при загрузке ```
+        enabled: yes # Включить автозапуск при загрузке
+```
