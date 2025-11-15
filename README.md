@@ -27,3 +27,41 @@ ___
 | Закиров Р.Р.  | 1     | 1hlvcd    |
 | Карунос Е.И.    | 2       | 3tyu     |
 | Гурьев М.А.    | 3       | 2fde      |
+___
+## Пример плейбука Ansible в коде
+``` name: Установка и запуск веб-сервера nginx
+  hosts: webservers # Указывает, на каких хостах будет выполняться плейбук
+  become: yes # Выполнять задачи с правами суперпользователя
+
+  tasks:
+    - name: Обновить список пакетов
+      apt: # Используется модуль apt для пакетного менеджера Debian/Ubuntu
+        update_cache: yes
+
+    - name: Установить nginx
+      apt:
+        name: nginx
+        state: present # Убедиться, что пакет установлен
+
+    - name: Создать директорию для сайта
+      file:
+        path: /var/www/my_site
+        state: directory # Создать директорию, если ее нет
+
+    - name: Скопировать файл index.html
+      copy:
+        src: files/index.html # Локальный файл для копирования
+        dest: /var/www/my_site/index.html # Путь на удаленном сервере
+
+    - name: Настроить права доступа для директории
+      file:
+        path: /var/www/my_site
+        owner: www-data
+        group: www-data
+        mode: '0755'
+
+    - name: Запустить сервис nginx
+      service:
+        name: nginx
+        state: started
+        enabled: yes # Включить автозапуск при загрузке ```
