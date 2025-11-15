@@ -6,8 +6,11 @@ ___
 ## Блок кода
 {lineno-start=1 emphasize-lines="10,14"}
 ```yaml
-server: port: 8080
-liquibase: base: &base user: <admin>
+server:
+  port: 8080
+liquibase:
+  base: &base
+    user: <admin>
     password: <admin_password>
   test:
     <<: *base
